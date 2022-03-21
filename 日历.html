@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ch-ZN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日历</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        label {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        select {
+            margin-right: 15px;
+            border: none;
+            /* border-bottom: 1px solid #aad; */
+            outline: none;
+            font-size: 17px;
+            color: rgb(51, 54, 201);
+            cursor: pointer;
+            background-color: transparent;
+        }
+        
+        .output {
+            width: 501px;
+            margin: 100px auto;
+            /* border: 1px dotted #ccc; */
+            padding-left: 7px;
+        }
+        
+        h1 {
+            margin: 20px 0;
+        }
+        
+        table {
+            background-color: #A8B192;
+            padding-left: 5px;
+            padding-top: 5px;
+            padding-bottom: 3px;
+            border-radius: 15px;
+        }
+        
+        td {
+            list-style: none;
+            float: left;
+            padding-right: 3px;
+            padding-bottom: 3px;
+            background-color: rgb(127, 236, 255);
+            width: 66px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }
+        
+        thead tr td:first-child {
+            border-radius: 15px 0 0 15px;
+        }
+        
+        thead tr td:last-child {
+            border-radius: 0 15px 15px 0;
+        }
+        
+        thead td {
+            background-color: transparent;
+            background-color: #EBAD5A;
+            margin-bottom: 4px;
+            height: 45px;
+            width: 69px;
+            line-height: 45px;
+            color: #000;
+            font-weight: 600;
+        }
+        
+        thead td:hover {
+            background: linear-gradient( 45deg, #485563, #29323c);
+            color: aliceblue;
+        }
+        
+        tbody td {
+            background-color: #fff;
+            margin-right: 3px;
+            margin-bottom: 3px;
+            border-radius: 10px;
+        }
+        
+        tbody td:hover {
+            background-color: rgb(229, 255, 136);
+            transform: translate(0, -2px);
+        }
+        
+        .current {
+            background-color: #EBAD5A;
+        }
+        
+        .emptBox {
+            background-color: transparent;
+        }
+        
+        .emptBox:hover {
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="output">
+
+        <label for="year">Select year:</label>
+        <select id="year">
+            <option value="2000">2000</option>
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+        </select>
+        <label for="month">Select month:</label>
+        <select id="month">
+            <option value="1" >January</option>
+            <option value="2" >February</option>
+            <option value="3" >March</option>
+            <option value="4" >April</option>
+            <option value="5" >May</option>
+            <option value="6" >June</option>
+            <option value="7" >July</option>
+            <option value="8" >August</option>
+            <option value="9" >September</option>
+            <option value="10" >October</option>
+            <option value="11" >November</option>
+            <option value="12" >December</option>
+        </select>
+        <h1></h1>
+        <table>
+            <thead>
+                <tr>
+                    <td>周日</td>
+                    <td>周一</td>
+                    <td>周二</td>
+                    <td>周三</td>
+                    <td>周四</td>
+                    <td>周五</td>
+                    <td>周六</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // 获取元素
+        let selectYear = document.querySelector('#year');
+        let selectMonth = document.querySelector('#month');
+        let list = document.querySelector('tbody');
+        let h1 = document.querySelector('h1');
+
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth() + 1;
+        let day = new Date().getDate();
+        // 将月份转换为对应月份的英文
+        monthDefault(currentMonth);
+
+        function monthDefault(currentMonth) {
+            switch (currentMonth) {
+                case 1:
+                    selectMonth.value = 'January';
+                    break;
+                case 2:
+                    selectMonth.value = 'February';
+                    break;
+                case 3:
+                    selectMonth.value = 'March';
+                    break;
+                case 4:
+                    selectMonth.value = 'April';
+                    break;
+                case 5:
+                    selectMonth.value = 'May';
+                    break;
+                case 6:
+                    selectMonth.value = 'June';
+                    break;
+                case 7:
+                    selectMonth.value = 'July';
+                    break;
+                case 8:
+                    selectMonth.value = 'August';
+                    break;
+                case 9:
+                    selectMonth.value = 'September';
+                    break;
+                case 10:
+                    selectMonth.value = 'October';
+                    break;
+                case 11:
+                    selectMonth.value = 'November';
+                    break;
+                case 12:
+                    selectMonth.value = 'December';
+                    break;
+            }
+        }
+
+
+
+        // 初始年和月
+        selectMonth.value = currentMonth;
+        selectYear.value = currentYear.toString();
+
+        // 检测<select>菜单中选择的值何时更改的事件处理程序
+        selectMonth.addEventListener('change', function() {
+            list.innerHTML = '';
+            checkSolarMomth(selectYear.value, selectMonth.value);
+            console.log('更换了月份');
+        })
+        selectYear.addEventListener('change', function() {
+            list.innerHTML = '';
+            checkSolarMomth(selectYear.value, selectMonth.value);
+            console.log('更换了年份');
+        })
+
+        //预执行
+        checkSolarMomth(selectYear.value, selectMonth.value);
+
+        // 判断年和月 反对对应天数
+        function checkSolarMomth(year, month, day) {
+            // 将选定月份的值赋给choice
+            let choice = selectMonth.value;
+            // 将默认值设为大月 31
+            let days = 31;
+            // 选项为二月的时候进行判断
+            if (choice == 2) {
+                // 判断是否为闰年
+                if (leapYear(year)) {
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+            } else if (choice == 4 || choice == 6 || choice == 9 || choice == 11) {
+                days = 30;
+            }
+            createCalendar(year, choice, days);
+        }
+        // 绘制日历并在<h1>元素中显示正确的月份
+        function createCalendar(year, choice, days) {
+            // 将选中的值赋给h1标签
+            h1.textContent = year + '-' + choice;
+            let week = getCurrentDay(year, choice, 1);
+            if (week) {
+                for (let i = 0; i < week; i++) {
+                    let emptBox = document.createElement('td');
+                    emptBox.className = 'emptBox';
+                    list.appendChild(emptBox);
+                }
+            }
+            // 循环创建li
+            for (let i = 1; i <= days; i++) {
+                // 创建li
+                let listItem = document.createElement('td');
+                listItem.textContent = i;
+                // 添加li到tbody里
+                list.appendChild(listItem);
+            }
+        }
+
+        // 判断闰年函数
+        function leapYear(year) {
+            if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // 根据传入的年月日 获取星期
+        function getCurrentDay(y, m, d) {
+            let myDate = new Date();
+            myDate.setFullYear(+y, +(m - 1), +d);
+            let currentDay = myDate.getDay();
+            return currentDay;
+        }
+    </script>
+</body>
+
+</html>
